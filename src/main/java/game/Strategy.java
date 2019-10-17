@@ -1,29 +1,32 @@
 package game;
 
-import util.ExternalException;
 
-public class Strategy
+import java.util.ArrayList;
+
+/**
+ * An abstract implementation of one strategy
+ */
+public abstract class Strategy
 {
+    /** The game on which this strategy is applied */
+    protected Game game;
 
-    private StrategyType type;
-
-    enum StrategyType
+    /**
+     * Basic setter for the game
+     * @param game
+     * The game to which this strategy refers
+     */
+    void useGame(Game game)
     {
-        RANDOM, BKT, IDDFS
+        this.game = game;
     }
 
-    public Strategy(String strategy)
-    {
-        type = convertToStrategyType(strategy);
-    }
-
-    private StrategyType convertToStrategyType(String strategy)
-    {
-        for (StrategyType type : StrategyType.values())
-            if (type.name().equals(strategy))
-                return type;
-        throw new ExternalException("The strategy provided is invalid");
-    }
-
-
+    /**
+     * The core method which is abstract
+     * @param initial
+     * The initial state of the strategy
+     * @return
+     * An array list representing the solution after applying the strategy
+     */
+    public abstract ArrayList<State> run(State initial);
 }
