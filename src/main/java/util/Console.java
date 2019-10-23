@@ -92,7 +92,7 @@ public class Console implements IOManager
     public Strategy readStrategy()
     {
         do {
-            String strategy = readString("Insert the strategy (RANDOM/BKT/IDDFS): ");
+            String strategy = readString("Insert the strategy (RANDOM/BKT/IDDFS/ASTAR): ");
             try
             {
                 return StrategyFactory.create(strategy);

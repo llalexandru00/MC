@@ -3,9 +3,8 @@ package game;
 /**
  * The description of one single state of the game in a moment of time
  */
-public class State
+public class State implements Comparable<State>
 {
-
     /**
      * A basic enum describing the possible states of the boat
      */
@@ -107,6 +106,24 @@ public class State
             return missionaries == state.missionaries && cannibals == state.cannibals && side.equals(state.side);
         }
         return false;
+    }
+
+    /**
+     * Override of the compareTo method imposed by the Comparable interface
+     * @param state
+     * The operand meant to be used as compare target
+     * @return
+     * Basic return of a compareTo method
+     */
+    @Override
+    public int compareTo(State state) {
+        if (missionaries == state.missionaries && cannibals == state.getCannibals() && side == state.side)
+            return 0;
+        if (missionaries < state.missionaries ||
+                missionaries == state.missionaries && cannibals < state.getCannibals() ||
+                missionaries == state.missionaries && cannibals == state.getCannibals() && side == SIDE.LEFT)
+            return -1;
+        return 1;
     }
 
     /**

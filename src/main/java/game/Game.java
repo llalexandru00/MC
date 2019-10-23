@@ -163,4 +163,8 @@ public class Game
     {
         return missionaries*cannibals*2;
     }
+
+    int getBoatDimension() {
+        return boatDimension;
+    }
 }

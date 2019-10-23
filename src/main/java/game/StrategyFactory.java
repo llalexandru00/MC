@@ -25,6 +25,8 @@ public class StrategyFactory
                 return new BktStrategy();
             case "IDDFS":
                 return new IddfsStrategy();
+            case "ASTAR":
+                return new AStarStrategy();
             default:
                 throw new ExternalException("Strategy is invalid");
         }
