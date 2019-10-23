@@ -24,12 +24,32 @@ public class AStarStrategy extends Strategy
      */
     private int heuristic_distance(State state)
     {
+        // compute the number of persons which are still to be transported (are on the right side)
         int persons = state.getCannibals() + state.getMissionaries();
+
+        // test if the boat is on the left side, this can imply an extra move to get it on the right side
         int left = state.getSide() == State.SIDE.LEFT ? 1 : 0;
+
+        // how many persons can be transported in a batch
+        // boatDimension people are transported from left to right
+        // only one is transported back
         int batch = game.getBoatDimension() - 1;
-        int moves = (persons + left) / batch + ((persons + left) % batch == 0 ? 0 : 1);
+
+        // the number raw two-way moves is the number of persons (+1 if because moving the boat from the left side
+        // will bring an extra person) over the batch size
+        int moves = (persons + left) / batch;
+
+        // however, if there are still some people left (a number less than the batch size), another two-way
+        // move should be done
+        moves += (persons + left) % batch == 0 ? 0 : 1;
+
+        // transform two-way moves in one-way moves (which is equivalent to the number of transitions)
         moves *= 2;
+
+        // add the extra move if the boat was initially on the left side and subtract 1 as the boat shouldn't
+        // return on the right side at the last batch
         moves += left - 1;
+
         return moves;
     }
 
@@ -63,6 +83,7 @@ public class AStarStrategy extends Strategy
             {
                 break;
             }
+
             int dist = distance.get(current);
             ArrayList<State> neighbors = game.getNeighbors(current);
             State last = from.get(current);
@@ -73,18 +94,15 @@ public class AStarStrategy extends Strategy
 
             for (State neighbor : neighbors)
             {
-                if (!distance.containsKey(neighbor) || distance.get(neighbor) > dist+1)
+                if (!distance.containsKey(neighbor) || distance.get(neighbor) > dist + 1)
                 {
-                    if (distance.containsKey(neighbor))
-                    {
-                        heap.remove(neighbor);
-                    }
-                    distance.put(neighbor, dist+1);
+                    distance.put(neighbor, dist + 1);
                     from.put(neighbor, current);
                     heap.add(neighbor);
                 }
             }
         }
+
         if (current == null || !current.isFinal())
         {
             return null;
@@ -96,6 +114,7 @@ public class AStarStrategy extends Strategy
             seq.add(current);
             current = from.get(current);
         }
+
         seq.add(initial);
         Collections.reverse(seq);
         return seq;
