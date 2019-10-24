@@ -12,6 +12,27 @@ public class Configuration
     private Strategy strategy;
 
     /**
+     * Implicit constructor
+     */
+    public Configuration()
+    {
+
+    }
+
+    /**
+     * Basic constructor to initialize members
+     * @param input
+     * The input used for the configuration
+     * @param strategy
+     * The strategy used for the configuration
+     */
+    public Configuration(Input input, Strategy strategy)
+    {
+        this.input = input;
+        this.strategy = strategy;
+    }
+
+    /**
      * Basic setter for the input
      * @param input
      * The input of the configuration
@@ -36,7 +57,7 @@ public class Configuration
      * @return
      * The strategy of the configuration
      */
-    Strategy getStrategy()
+    public Strategy getStrategy()
     {
         return strategy;
     }
@@ -46,7 +67,7 @@ public class Configuration
      * @return
      * The strategy of the configuration
      */
-    Input getInput()
+    public Input getInput()
     {
         return input;
     }

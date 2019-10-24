@@ -13,6 +13,16 @@ public class AStarStrategy extends Strategy
     /* Stores a map for each state to know where to backtrace the path until the initial state on the minimum path */
     private Map<State, State> from = new TreeMap<>();
 
+    /* Stores the current states in a monotone order */
+    private TreeSet<State> heap = new TreeSet<>((state1, state2) ->
+    {
+        int left = distance.get(state1) + heuristic_distance(state1);
+        int right = distance.get(state2) + heuristic_distance(state2);
+        if (left == right)
+            return state1.compareTo(state2);
+        return Integer.compare(left, right);
+    });
+
     /**
      * The main heuristic function which takes into the account the position of the boat and the number of persons
      * In case of problems with a boat dimension close to the people number, the boat side will count more
@@ -63,14 +73,9 @@ public class AStarStrategy extends Strategy
     @Override
     public ArrayList<State> run(State initial)
     {
-        TreeSet<State> heap = new TreeSet<>((state1, state2) ->
-        {
-            int left = distance.get(state1) + heuristic_distance(state1);
-            int right = distance.get(state2) + heuristic_distance(state2);
-            if (left == right)
-                return state1.compareTo(state2);
-            return Integer.compare(left, right);
-        });
+        distance.clear();
+        from.clear();
+        heap.clear();
 
         from.put(initial, null);
         distance.put(initial, 0);
@@ -79,7 +84,7 @@ public class AStarStrategy extends Strategy
         while (!heap.isEmpty())
         {
             current = heap.pollFirst();
-            if (current != null && current.isFinal())
+            if (current == null || current.isFinal())
             {
                 break;
             }
@@ -118,5 +123,10 @@ public class AStarStrategy extends Strategy
         seq.add(initial);
         Collections.reverse(seq);
         return seq;
+    }
+
+    @Override
+    public String toString() {
+        return "ASTAR";
     }
 }

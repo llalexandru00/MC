@@ -72,4 +72,9 @@ public class IddfsStrategy extends Strategy
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "IDDFS";
+    }
+
 }

@@ -117,11 +117,11 @@ public class State implements Comparable<State>
      */
     @Override
     public int compareTo(State state) {
-        if (missionaries == state.missionaries && cannibals == state.getCannibals() && side == state.side)
+        if (missionaries == state.missionaries && cannibals == state.cannibals && side == state.side)
             return 0;
         if (missionaries < state.missionaries ||
-                missionaries == state.missionaries && cannibals < state.getCannibals() ||
-                missionaries == state.missionaries && cannibals == state.getCannibals() && side == SIDE.LEFT)
+                missionaries == state.missionaries && cannibals < state.cannibals ||
+                missionaries == state.missionaries && cannibals == state.cannibals && side == SIDE.LEFT)
             return -1;
         return 1;
     }

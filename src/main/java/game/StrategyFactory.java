@@ -2,6 +2,8 @@ package game;
 
 import util.ExternalException;
 
+import java.util.ArrayList;
+
 /**
  * Basic factory used for generating strategies
  */
@@ -32,4 +34,12 @@ public class StrategyFactory
         }
     }
 
+    public static ArrayList<Strategy> createAll() {
+        ArrayList<Strategy> all = new ArrayList<>();
+        all.add(new RandomStrategy());
+        all.add(new BktStrategy());
+        all.add(new IddfsStrategy());
+        all.add(new AStarStrategy());
+        return all;
+    }
 }

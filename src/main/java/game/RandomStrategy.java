@@ -55,4 +55,9 @@ public class RandomStrategy extends Strategy
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return "RANDOM";
+    }
 }

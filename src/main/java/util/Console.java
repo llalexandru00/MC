@@ -115,6 +115,18 @@ public class Console implements IOManager
         System.out.println(message);
     }
 
+
+    /**
+     * Write raw message, without new line
+     * @param message
+     * A message to be written to the console
+     */
+    @Override
+    public void writeRaw(String message)
+    {
+        System.out.print(message);
+    }
+
     /**
      * The write error primitive
      * @param message

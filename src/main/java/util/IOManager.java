@@ -19,6 +19,9 @@ public interface IOManager
     /** Write primitive */
     void write(String message);
 
+    /** Write raw string without new line */
+     void writeRaw(String message);
+
     /** Write error primitive */
     void writeErr(String message);
 

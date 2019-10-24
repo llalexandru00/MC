@@ -5,7 +5,7 @@ import util.ExternalException;
 /**
  * A container for the numeric parameters
  */
-public class Input
+public class Input implements Comparable<Input>
 {
     /** The number of missionaries */
     private final int missionaries;
@@ -38,9 +38,9 @@ public class Input
      */
     private void validate()
     {
-        if (this.missionaries < 0 || this.cannibals < 0 || this.boatDimension <= 0)
+        if (this.missionaries < 0 || this.cannibals < 0 || this.boatDimension <= 1)
         {
-            throw new ExternalException("The numbers inserted should be positive.");
+            throw new ExternalException("The numbers inserted should be positive. The boat size should be at least 2.");
         }
         if (this.missionaries < this.cannibals)
         {
@@ -75,5 +75,34 @@ public class Input
      */
     int getBoatDimension() {
         return boatDimension;
+    }
+
+
+    /**
+     * Basic toString override
+     * @return
+     * A string describing this input
+     */
+    public String toString()
+    {
+        return missionaries + "/" + cannibals + "/" + boatDimension;
+    }
+
+    /**
+     * Override of the compareTo method imposed by the Comparable interface
+     * @param input
+     * The operand meant to be used as compare target
+     * @return
+     * Basic return of a compareTo method
+     */
+    @Override
+    public int compareTo(Input input) {
+        if (missionaries == input.missionaries && cannibals == input.cannibals && boatDimension == input.boatDimension)
+            return 0;
+        if (missionaries < input.missionaries ||
+            missionaries == input.missionaries && cannibals < input.cannibals ||
+            missionaries == input.missionaries && cannibals == input.cannibals && boatDimension < input.boatDimension)
+            return -1;
+        return 1;
     }
 }
